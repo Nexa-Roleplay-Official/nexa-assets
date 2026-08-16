@@ -1,24 +1,29 @@
 # nexa-assets
 
-Public CDN assets for **Nexa Roleplay** — server list banners, logos, and static files served via GitHub Pages / raw URLs.
+Public CDN assets for **Nexa Roleplay** — server list banners, logos, and inventory icons served via **GitHub Pages**.
+
+Base URL: `https://nexa-roleplay-official.github.io/nexa-assets/`
 
 ## Contents
 
-| File | Use |
+| Path | Use |
 |------|-----|
 | `REV_NEXA_BANNER_FM.gif` | FiveM server list banner |
 | `REV_NEXA_BANNER_FM_source.gif` | Source banner asset |
 | `REV_NEXA_LOGO.png` | Nexa logo |
+| `inventory/*.png` | ox_inventory item / weapon icons |
 
-## Usage
+## ox_inventory
 
-Link directly from raw GitHub URL or your CDN mirror, for example:
+In `ox.cfg`:
 
+```cfg
+setr inventory:imagepath "https://nexa-roleplay-official.github.io/nexa-assets/inventory"
 ```
-https://raw.githubusercontent.com/Nexa-Roleplay-Official/nexa-assets/main/REV_NEXA_LOGO.png
-```
 
-See [assets/cdn/README.md](https://github.com/Nexa-Roleplay-Official/nexa-resources/blob/main/assets/cdn/README.md) in **nexa-resources** for CDN setup notes.
+Icons resolve as `{imagepath}/{itemName}.png` (example: `.../inventory/WEAPON_BAT.png`).
+
+Prefer **GitHub Pages** URLs (correct `Content-Type`, CORS `*`). Avoid `raw.githubusercontent.com` for in-game / NUI images.
 
 ## Related
 
