@@ -1,2 +1,2 @@
-# inv/
-CDN item icons go here. Empty on purpose after cache-bust wipe (2026-09-16).
+# inv/ — ox_inventory CDN icons
+Live at: https://nexa-roleplay-official.github.io/nexa-assets/inv/{item}.png

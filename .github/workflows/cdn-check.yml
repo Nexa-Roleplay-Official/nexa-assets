@@ -1,0 +1,27 @@
+# Verify inventory CDN assets on push (Pages already publishes from main branch).
+name: CDN inventory check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'inv/**'
+      - 'inventory/**'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Count icons
+        run: |
+          set -euo pipefail
+          inv=$(find inv -maxdepth 1 -name '*.png' 2>/dev/null | wc -l | tr -d ' ')
+          legacy=$(find inventory -maxdepth 1 -name '*.png' 2>/dev/null | wc -l | tr -d ' ')
+          echo "inv/*.png = $inv"
+          echo "inventory/*.png (legacy) = $legacy"
+          echo "CDN base: https://nexa-roleplay-official.github.io/nexa-assets/inv/"
+          if [ "$inv" -eq 0 ] && [ "$legacy" -eq 0 ]; then
+            echo "::warning::No inventory PNGs found under inv/ or inventory/"
+          fi
