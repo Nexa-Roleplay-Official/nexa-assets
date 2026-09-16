@@ -6,10 +6,10 @@ Source repo for **static** Nexa assets (inventory icons, banners). Live inventor
 
 | | |
 |--|--|
-| **Live CDN** | `https://media.maheskanoko.com/inv/{item}.png` |
+| **Live CDN** | `https://media.maheskanoko.com/ox-inv/{item}.png` |
 | **Repo folder** | `inv/*.png` (this repo) |
 | **VPS path** | `/var/www/nexa-media/inv/` on `cdn-server-nexa` (`210.247.250.102`) |
-| **ox.cfg** | `setr inventory:imagepath "https://media.maheskanoko.com/inv"` |
+| **ox.cfg** | `setr inventory:imagepath "https://media.maheskanoko.com/ox-inv"` |
 
 ### Deploy / update icons
 
