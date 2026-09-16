@@ -1,50 +1,34 @@
 # nexa-assets
 
-Public **CDN** for Nexa Roleplay — served by **GitHub Pages** (no separate CDN host).
+Source repo for **static** Nexa assets (inventory icons, banners). Live inventory CDN is **`media.maheskanoko.com`** (same host as mk_phone photos).
 
-**Base URL:** https://nexa-roleplay-official.github.io/nexa-assets/
+## Inventory icons (ox_inventory)
 
-## How CI/CD works (simple)
+| | |
+|--|--|
+| **Live CDN** | `https://media.maheskanoko.com/inv/{item}.png` |
+| **Repo folder** | `inv/*.png` (this repo) |
+| **VPS path** | `/var/www/nexa-media/inv/` on `cdn-server-nexa` (`210.247.250.102`) |
+| **ox.cfg** | `setr inventory:imagepath "https://media.maheskanoko.com/inv"` |
 
+### Deploy / update icons
+
+```bash
+# from 34. Nexa V2/nexa-assets
+rsync -avz --include='*/' --include='*.png' --exclude='*' \
+  inv/ root@210.247.250.102:/var/www/nexa-media/inv/
 ```
-drop PNG into repo  →  git push main  →  GitHub Pages rebuild  →  live CDN URL
-```
 
-There is no extra upload step. **This repo IS the CDN source.** Pages is set to publish from `main` `/`.
+Then push this repo so Git stays the backup/source of truth.
+
+Phone **camera uploads** stay under `https://media.maheskanoko.com/phone/...` (API upload). Inventory icons are static files under `/inv/`.
+
+## Other files
 
 | Path | Use |
 |------|-----|
-| `inv/*.png` | **ox_inventory icons** (current — see `ox.cfg`) |
-| `inventory/` | legacy (empty after wipe; do not use) |
-| `REV_NEXA_*.gif/png` | server list banner / logo |
-
-### ox_inventory (`nexa-resources/ox.cfg`)
-
-```cfg
-setr inventory:imagepath "https://nexa-roleplay-official.github.io/nexa-assets/inv"
-```
-
-Resolves as `{imagepath}/{itemName}.png`  
-Example: `https://nexa-roleplay-official.github.io/nexa-assets/inv/WEAPON_BAT.png`
-
-### Add / update icons
-
-1. Put files in `inv/` named exactly like the item key (`bandage.png`, `WEAPON_PISTOL.png`).
-2. Commit + push to `main` on [Nexa-Roleplay-Official/nexa-assets](https://github.com/Nexa-Roleplay-Official/nexa-assets).
-3. Wait ~1–2 minutes for Pages, then hard-reconnect / clear FiveM cache if an old URL was cached.
-
-Prefer **GitHub Pages** URLs (CORS + correct `Content-Type`). Avoid `raw.githubusercontent.com` for NUI.
-
-## vs mk_phone images
-
-| | mk_phone | ox_inventory |
-|--|----------|--------------|
-| Where files live | Inside resource: `mk_phone/images/` | This CDN repo: `inv/` |
-| How game loads them | `nui://mk_phone/images/...` (bundled) | HTTPS Pages URL from `inventory:imagepath` |
-| “CI/CD” | Ship with resource update | Push to this repo → Pages |
-
-Phone **item** icons used by ox (`phone_black.png`, etc.) should also exist under `inv/` so inventory slots match.
+| `REV_NEXA_*.gif/png` | server list banner / logo (still via GitHub Pages OK) |
 
 ## Related
 
-- [nexa-resources](https://github.com/Nexa-Roleplay-Official/nexa-resources) — `ox.cfg` imagepath
+- [nexa-resources](https://github.com/Nexa-Roleplay-Official/nexa-resources) — `ox.cfg`
